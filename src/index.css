@@ -1,0 +1,147 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Space+Grotesk:wght@300..700&family=Space+Mono:wght@400;700&display=swap');
+
+@import "tailwindcss";
+
+/* Design Tokens for Theme System */
+:root {
+  --bg: #080808;
+  --bg-secondary: #0D0D0D;
+  --surface: #0F0F0F;
+  --surface-hover: #161616;
+  --text-primary: #F3F1EB;
+  --text-secondary: #8A8A8A;
+  --text-muted: #5A5A5A;
+  --border: #1A1A1A;
+  --border-strong: #2A2A2A;
+  --signal-red: #CC2B2B;
+  --signal-red-bright: #E03333;
+  --signal-red-bg: rgba(204, 43, 43, 0.08);
+  --amber: #D4811A;
+  --green: #3D9970;
+  --dot-grid-color: rgba(255, 255, 255, 0.03);
+  --nav-bg: rgba(8, 8, 8, 0.94);
+  --card-bg: #0A0A0A;
+}
+
+[data-theme="light"] {
+  --bg: #F7F6F2;
+  --bg-secondary: #EFECE6;
+  --surface: #FFFFFF;
+  --surface-hover: #F2EFE9;
+  --text-primary: #121212;
+  --text-secondary: #5A5A57;
+  --text-muted: #8C8A84;
+  --border: #E0DDD5;
+  --border-strong: #C8C5BD;
+  --signal-red: #C82323;
+  --signal-red-bright: #DC2626;
+  --signal-red-bg: rgba(200, 35, 35, 0.08);
+  --amber: #B4650D;
+  --green: #2B7A54;
+  --dot-grid-color: rgba(0, 0, 0, 0.04);
+  --nav-bg: rgba(247, 246, 242, 0.94);
+  --card-bg: #FAFAF7;
+}
+
+@theme {
+  --color-background: var(--bg);
+  --color-surface: var(--surface);
+  --color-border: var(--border);
+  --color-primaryText: var(--text-primary);
+  --color-secondaryText: var(--text-secondary);
+  --color-astraRed: var(--signal-red);
+  --color-signalRed: var(--signal-red-bright);
+  --color-amber: var(--amber);
+  --color-monospaceGreen: var(--green);
+
+  --font-inter: 'Inter', sans-serif;
+  --font-space: 'Space Grotesk', sans-serif;
+  --font-mono: 'Space Mono', 'Courier New', monospace;
+
+  --background-image-dot-grid: radial-gradient(var(--dot-grid-color) 1px, transparent 1px);
+}
+
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--text-primary);
+    font-family: var(--font-inter);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-space);
+  }
+
+  /* Selection color */
+  ::selection {
+    background-color: rgba(204, 43, 43, 0.25);
+    color: var(--text-primary);
+  }
+}
+
+/* ─── Scrollbar ─────────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--border-strong); }
+
+/* ─── Dot grid background ────────────────────────────────── */
+.bg-dot-grid {
+  background-image: var(--background-image-dot-grid);
+  background-size: 40px 40px;
+}
+
+/* ─── Text stroke ────────────────────────────────────────── */
+.text-stroke-primary {
+  -webkit-text-stroke: 1px var(--text-primary);
+  color: transparent;
+}
+
+/* ─── Clip-reveal utility ────────────────────────────────── */
+.clip-reveal   { clip-path: inset(0 100% 0 0); }
+.clip-revealed { clip-path: inset(0 0%   0 0); transition: clip-path 0.7s cubic-bezier(0.4,0,0.2,1); }
+
+/* ─── Hover underline link ───────────────────────────────── */
+.link-hover {
+  position: relative;
+  display: inline-block;
+}
+.link-hover::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--signal-red);
+  transition: width 0.3s ease;
+}
+.link-hover:hover::after { width: 100%; }
+
+/* ─── Reduced motion ─────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ─── Focus ring ─────────────────────────────────────────── */
+button:focus-visible, a:focus-visible {
+  outline: 2px solid var(--signal-red);
+  outline-offset: 3px;
+}
+button { cursor: pointer; }
